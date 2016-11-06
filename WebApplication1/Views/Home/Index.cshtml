@@ -1,0 +1,115 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ <!-- Contact Section -->
+
+
+        <div class="row">
+            <div class="col-lg-12 text-left">
+                <h4>Get Weather Details</h4>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 ">
+                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                <form name="sentMessage" id="contactForm" novalidate>
+                    <table class="table">
+                        <tr>
+                            <td class="col-md-2"><label>Please enter Country</label>
+                            </td>
+                            <td class="col-md-2"><input type="text" class="form-control" maxlength="100" id="tbCountry"></td>
+                            <td class="col-md-2">
+                            @*<button type="submit" onclick="GetAllEmployees(); return false;" class="btn btn-success  btn-sm">get all cities</button>*@
+                            </td>
+                            <td class="col-md-2 "><label>City</label>&nbsp;;</td>
+                            <td class="col-md-4 temp" id="tdCity">
+
+                                <select class="form-control" id="mySelect">
+                                    <option value="Select">--Select--</option>
+                                </select>
+                            </td>
+                        </tr>
+<tr><td colspan="5"></td></tr>
+                    </table>
+                    <br />
+                    <div class="text-danger" id="errorMessage">Please enter minimum four letters</div>
+                    <div class="text-success" id="successrMessage"></div>
+                    <br />
+                    <h4>Weather Details</h4>
+                    <h6><label id="lblHeader"></label></h6>
+                    <table class="table">
+
+                        <tr>
+                            <td class="col-md-3"><i class="fa fa-adjust" aria-hidden="true"></i><label>Location</label></td>
+                            <td class="col-md-3"> <label id="lblLocation"></label></td>
+                            <td class="col-md-3 "><label>Wind</label></td>
+                            <td class="col-md-3"><label id="lblWind"></label></td>
+                        </tr>
+
+                        <tr>
+                            <td><label>Visibility</label></td>
+                            <td><label id="lblVisibility"></label></td>
+                            <td><label>Skyconditions</label></td>
+                            <td><label id="lblSkyconditions"></label></td>
+                        </tr>
+
+                        <tr>
+                            <td><label>Temperature</label></td>
+                            <td><label id="lblTemperature"></label></td>
+                            <td><label>Pressure</label></td>
+                            <td><label id="lblPressure"></label></td>
+                        </tr>
+
+                        <tr>
+                            <td><label>RelativeHumidity</label></td>
+                            <td><label id="lblRelativeHumidity"></label></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div id="results">
+
+                    </div>
+                    <br>
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+   
+
+
+<!-- About Section -->
+<section class="success" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>About</h2>
+                <hr class="star-light">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-2">
+                <p>This web page is used to get the weather details for variuos cities.By entering correct country name will populate
+                the Select list.Once the select list is loaded ,City can be selected.Then the application will fetch the weather details from the api.</p>
+            </div>
+           
+           
+        </div><br /><br />
+        <div class="row">
+           
+            <div class="col-lg-6 col-lg-offset-2">
+                <p>
+                    In order to retrieve the cities user has to enter minmum four letters and must enter a correct country name.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>

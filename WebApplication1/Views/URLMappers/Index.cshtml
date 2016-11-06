@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebApplication1.Models.URLMapper>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h4>Passanger Name List</h4>
+
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12 ">
+        <p>
+            @Html.ActionLink("Add new url", "Create",null, new { @class = "btn btn-success  btn-sm" })
+        </p>
+
+        <table class="table  table-striped">
+            <tr>
+                <th>
+                  short URL
+                </th>
+                <th>
+                   Long URL
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @WebApplication1.Helpers.GlobalVariable.baseURL@Html.DisplayFor(modelItem => item.shortURL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.longUrl)
+                    </td>
+                    <td>
+                      
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger  btn-sm" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    </div>
+

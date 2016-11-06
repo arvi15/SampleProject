@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyDealDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FileLists">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PNLs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pnlType" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="key" Type="varchar" MaxLength="50" />
+          <Property Name="booking" Type="varchar" MaxLength="50" />
+          <Property Name="FileListId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="URLMappers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shortURL" Type="varchar" MaxLength="100" />
+          <Property Name="longUrl" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_FileListPNL">
+          <End Role="FileLists" Type="Self.FileLists" Multiplicity="1" />
+          <End Role="PNLs" Type="Self.PNLs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileLists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PNLs">
+              <PropertyRef Name="FileListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyDealDBModelStoreContainer">
+          <EntitySet Name="FileLists" EntityType="Self.FileLists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PNLs" EntityType="Self.PNLs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="URLMappers" EntityType="Self.URLMappers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FileListPNL" Association="Self.FK_FileListPNL">
+            <End Role="FileLists" EntitySet="FileLists" />
+            <End Role="PNLs" EntitySet="PNLs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyDealDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="URLMapper">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shortURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="longUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="MyDealDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="URLMappers" EntityType="Self.URLMapper" />
+          <EntitySet Name="FileLists" EntityType="MyDealDBModel.FileList" />
+          <EntitySet Name="PNLs" EntityType="MyDealDBModel.PNL" />
+          <AssociationSet Name="FileListPNL" Association="MyDealDBModel.FileListPNL">
+            <End Role="FileList" EntitySet="FileLists" />
+            <End Role="PNL" EntitySet="PNLs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FileList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PNLs" Relationship="MyDealDBModel.FileListPNL" FromRole="FileList" ToRole="PNL" />
+        </EntityType>
+        <EntityType Name="PNL">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pnlType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="booking" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FileList" Relationship="MyDealDBModel.FileListPNL" FromRole="PNL" ToRole="FileList" />
+          <Property Name="FileListId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FileListPNL">
+          <End Type="MyDealDBModel.FileList" Role="FileList" Multiplicity="1" />
+          <End Type="MyDealDBModel.PNL" Role="PNL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PNL">
+              <PropertyRef Name="FileListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyDealDBModelStoreContainer" CdmEntityContainer="MyDealDBEntities">
+    <EntitySetMapping Name="URLMappers">
+      <EntityTypeMapping TypeName="IsTypeOf(MyDealDBModel.URLMapper)">
+        <MappingFragment StoreEntitySet="URLMappers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="shortURL" ColumnName="shortURL" />
+          <ScalarProperty Name="longUrl" ColumnName="longUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileLists">
+      <EntityTypeMapping TypeName="IsTypeOf(MyDealDBModel.FileList)">
+        <MappingFragment StoreEntitySet="FileLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PNLs">
+      <EntityTypeMapping TypeName="IsTypeOf(MyDealDBModel.PNL)">
+        <MappingFragment StoreEntitySet="PNLs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="pnlType" ColumnName="pnlType" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="key" ColumnName="key" />
+          <ScalarProperty Name="booking" ColumnName="booking" />
+          <ScalarProperty Name="FileListId" ColumnName="FileListId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
